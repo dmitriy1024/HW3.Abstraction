@@ -7,17 +7,47 @@ namespace HW3.Abstraction.Task1
     {
         static void Main(string[] args)
         {
-            var handlers = new List<AbstractHandler>();
-            handlers.Add(new DOCHandler());
-            handlers.Add(new TXTHandler());
-            handlers.Add(new XMLHandler());
+            string enteredStr;
+            while (true)
+            {
+                Console.WriteLine("What document do you want to use? (Enter DOC, TXT or XML) (x to exit)");
+                enteredStr = Console.ReadLine();
+                if (String.Compare(enteredStr, "DOC", true) == 0)
+                {
+                    UseDocument(new DOCHandler());
+                }
+                else if (String.Compare(enteredStr, "TXT", true) == 0)
+                {
+                    UseDocument(new TXTHandler());
+                }
+                else if (String.Compare(enteredStr, "XML", true) == 0)
+                {
+                    UseDocument(new XMLHandler());
+                }
+                else if (String.Compare(enteredStr, "x", true) == 0)
+                {
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Try again!");
+                }
+            }
+        }
 
-            handlers[1].Create();
-            handlers[2].Change();
-            handlers[0].Open();
-            handlers[1].Save();
-
-            Console.ReadKey();
+        static void UseDocument(AbstractHandler handler)
+        {
+            if (handler == null)
+            {
+                throw new ArgumentNullException();
+            }
+            else
+            {
+                handler.Create();
+                handler.Open();
+                handler.Change();
+                handler.Save();
+            }
         }
     }
 }
